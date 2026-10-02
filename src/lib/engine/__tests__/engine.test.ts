@@ -323,3 +323,15 @@ describe("persistence + offline", () => {
     expect(report.simulatedMs).toBe(TUNING.maxOfflineMs);
   });
 });
+
+describe("dev cheat code", () => {
+  it("grants a large balance on the correct code and rejects anything else", () => {
+    const s = fresh();
+    expect(actions.applyCheatCode(s, "000000").ok).toBe(false);
+    expect(s.balance).toBe(TUNING.startBalance);
+
+    const r = actions.applyCheatCode(s, "123456");
+    expect(r.ok).toBe(true);
+    expect(s.balance).toBeGreaterThan(1_000_000);
+  });
+});
