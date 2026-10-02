@@ -53,6 +53,7 @@ interface GameStore {
   assignWorker: (workerId: string, task: Task | null) => ActionResult;
   refreshCandidates: () => ActionResult;
   setAutoSell: (itemId: ItemId, patch: Partial<AutoSellRule>) => ActionResult;
+  applyCheatCode: (code: string) => ActionResult;
 
   dismissOffline: () => void;
   dismissNotice: (id: number) => void;
@@ -127,6 +128,7 @@ export const useGameStore = create<GameStore>()((set, get) => {
     assignWorker: (id, task) => run((d) => actions.assignWorker(d, id, task)),
     refreshCandidates: () => run((d) => actions.refreshCandidates(d)),
     setAutoSell: (itemId, patch) => run((d) => actions.setAutoSell(d, itemId, patch)),
+    applyCheatCode: (code) => run((d) => actions.applyCheatCode(d, code), { toastSuccess: true }),
 
     dismissOffline: () => set({ offlineReport: null }),
     dismissNotice: (id) => set({ notices: get().notices.filter((n) => n.id !== id) }),
