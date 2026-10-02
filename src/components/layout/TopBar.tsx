@@ -4,6 +4,7 @@ import { RotateCcw, TrendingDown, TrendingUp, Wallet } from "lucide-react";
 import { useGame, useGameStore } from "@/hooks/useGameState";
 import { selectors } from "@/lib/engine";
 import { fmtClock, fmtMoney, fmtSigned, tone } from "@/lib/format";
+import { DevPanel } from "@/components/dev/DevPanel";
 
 export function TopBar({ title }: { title: string }) {
   const game = useGame();
@@ -37,6 +38,7 @@ export function TopBar({ title }: { title: string }) {
         >
           <RotateCcw className="h-4 w-4" />
         </button>
+        <DevPanel />
       </div>
     </header>
   );
