@@ -169,3 +169,21 @@ export function setAutoSell(s: GameState, itemId: ItemId, patch: Partial<AutoSel
   if (patch.minPrice !== undefined && Number.isFinite(patch.minPrice)) rule.minPrice = Math.max(0.01, round2(patch.minPrice));
   return { ok: true, message: `Auto-sell for ${ITEMS[itemId].name} ${rule.enabled ? "on" : "off"}.` };
 }
+
+/* ------------------------------------------------------------------ */
+/* Dev cheat codes                                                      */
+/* ------------------------------------------------------------------ */
+
+const CHEAT_CODE_INFINITE_MONEY = "123456";
+/**
+ * A literal `Infinity` doesn't survive `JSON.stringify` (localStorage saves
+ * round-trip it as `null`), so "infinite" money is this large finite number.
+ */
+const CHEAT_INFINITE_MONEY_BALANCE = 999_999_999;
+
+export function applyCheatCode(s: GameState, code: string): ActionResult {
+  if (code.trim() !== CHEAT_CODE_INFINITE_MONEY) return { ok: false, message: "Unknown code." };
+  s.balance = CHEAT_INFINITE_MONEY_BALANCE;
+  pushLog(s, "good", "Cheat code redeemed: infinite money.");
+  return { ok: true, message: "Infinite money activated." };
+}
